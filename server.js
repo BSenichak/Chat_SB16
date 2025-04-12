@@ -46,3 +46,5 @@ io.on("connection", function(s){
         io.emit("update", JSON.stringify(messages))
     })
 })
+
+db.getUsers().then(res=>console.log(res)).catch(err=>console.log(err))

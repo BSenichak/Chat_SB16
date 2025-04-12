@@ -1,5 +1,5 @@
-let mysql = require("mysql2")
-require("dotenv").config()
+let mysql = require("mysql2");
+require("dotenv").config();
 
 let db = mysql.createConnection({
     host: process.env.HOST,
@@ -7,6 +7,19 @@ let db = mysql.createConnection({
     user: process.env.USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-})
+});
 
-module.exports = db
+let asyncDB = db.promise();
+
+async function getUsers() {
+    try {
+        let [rows, fields] = await asyncDB.query("select * from User");
+        return rows;
+    } catch (err) {
+        throw err.message;
+    }
+}
+
+module.exports = {
+    getUsers
+};
