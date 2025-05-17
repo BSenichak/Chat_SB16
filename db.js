@@ -29,6 +29,15 @@ async function checkExists(login) {
     }
 }
 
+async function getUser(login) {
+    try {
+        let [rows, fields] = await asyncDB.query("SELECT * FROM User WHERE login = ?", [login]);
+        return rows
+    } catch (err) {
+        throw err.message;
+    }
+}
+
 async function addUser(login, password) {
     try {
         let [rows, fields] = await asyncDB.query("insert into User(login, password) values(?, ?)", [login, password]);
@@ -61,5 +70,6 @@ module.exports = {
     getMessages,
     addMessage,
     checkExists,
-    addUser
+    addUser,
+    getUser
 };
